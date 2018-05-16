@@ -37,3 +37,207 @@
 	<script src="resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+<!--
+
+For any tag..
+title="I'm a tooltip"
+----------------------------------
+
+@media (min-width: 801px) {
+  body {
+	background-color:green;
+  }
+}
+----------------------------------
+@charset "UTF-8";
+----------------------------------
+
+// Center align a div content
+---------------------------------------
+<div style="border:2px solid red;" class="col-xs-6 col-xs-offset-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum...</div>
+
+
+Embedding HTML into another
+---------------------------------------
+Using iframe, object and embed tags
+
+
+https://www.w3schools.com/css/css_pseudo_classes.asp
+
+
+Translate - 2D
+-------------------------------------------
+	transform: translateX(50px);
+	transform: translateY(50px);
+	transform: translate(50px, 100px); --> Translated 50px x-axis and 100px y-axis
+
+Rotate - 2D
+-------------------------------------------
+	transform: rotate(75deg);
+	transform: rotate(-75deg);  --> Rotating anti-clockwise direction
+	
+Scale - 2D
+-------------------------------------------
+	transform: scaleX(2);
+	transform: scaleY(2);
+	transform: scale(2, 2); --> New size: Double the width and height
+	transform: scale(0.5*4, 0.5*4);
+	
+Skew - 2D
+-------------------------------------------
+	transform: skewX(75deg);
+	transform: skewY(75deg);
+	transform: skew(75deg, 75deg); --> skews 20 degrees along the x-axis, and 10 degrees along the y-axis
+	
+Doumenting APIs
+----------------------------------
+/**
+ * Function Description Here
+ *
+ * @param param1, param2
+ * @return Some return value
+ */
+private void fn() {
+	...
+}
+ 
+ 
+Get n-prime numbers 
+-------------------------------------------
+function isPrime(n) {
+	for(var i=2; i<n; i++) {
+		if(n % i == 0)
+			return false;
+	}
+	return true;
+}
+
+function showPrimes(n) {
+	for(var i=2; i<n; i++) {
+		if(!isPrime(i))
+			continue;
+		console.log(i);
+    }
+}
+
+
+ASCII code
+----------------------------
+var str = "abc";
+str.charCodeAt(0);	// 97	"a".charCodeAt() // 97
+str.codePointAt(0); // 97	str.codePointAt(2); // 99	"a".codePointAt() // 97
+
+Note:	charCodeAt() is UTF-16, codePointAt() is Unicode.
+
+String.fromCodePoint(97); // a
+
+
+Ways to create a map in JS
+-----------------------------------
+var map = new Map();
+map.set("a", 11);
+map.set(22, "b");
+// Reuslt:	{"a" => 11, 22 => "b"}
+
+var map = new Map([
+	["a", 11],
+	[22, "b"]
+]);
+// Reuslt:	{"a" => 11, 22 => "b"}
+
+var map = new Map(Object.entries({
+	"a": 11,
+	true: 12,
+	22: "b"
+}));
+// Reuslt:	{"22" => "b", "a" => 11, "true" => 12} -- Here all keys are of string datatype
+
+
+Iterating a map
+-----------------------------------
+-	var iterator = map.entries();
+	while (true) {
+		var result = iterator.next();
+		if (result.done)
+			break;
+		console.log(result.value);
+	}
+	
+	Array.from(map.keys()); or Array.from(map.values()); or Array.from(map.entries());
+	
+-	for(var key of map.keys()) {	// Keys
+		console.log(key);
+	}
+
+-	for(var val of map.values()) {	// Values
+		console.log(val);
+	}
+	
+-	for(var entry of map.entries()) {	// Entries
+		console.log(entry);
+	}
+
+Destructuring in JavaScript
+---------------------------------------------------
+
+-	var [firstName, lastName] = ["Suman", "B K"];
+	var [firstName, lastName] = "Suman**B K".split('**');
+	
+-	var [, age] = ["Suman", 26];	// age: 26
+	
+-	var user = {name: "Suman", age: 26, place: "Bangalore"};
+	for(var [key, value] of Object.entries(user)) {
+		console.log(key, value);
+	}
+	
+	var {age, place: placeValue, name} = user;	// Flower brackets used here because of object in right side -- Order of variables may not be neccessary
+	console.log(name, age, placeValue);
+	
+	// ---- Rest parameter (3 dots)
+-	var [name, ...restParams] = ["Suman", "B K", 26]; // Here restParams is array
+	console.log(name, restParams);	
+	// Result - Suman ["B K", 26]
+	
+	var obj = {height: 200, title: "Menu", width: 100};
+	var {title, ...restParams} = obj; // Here restParams is an object
+	// Result - title: "Menu" and restParams: {height: 200, width: 100}
+
+	// ---- Default Values
+-	var [firstName = "Dummy", lastName] = ["Suman", "B K"];
+	
+	function call_(name, dept="MCA") {
+		return name +"--"+ dept;
+	}
+	call_("Suman");
+	call_("Vinod", "MBA");
+	
+
+Sum of n natural numbers
+--------------------------------
+var sumTo = n => n && (n += sumTo(--n));
+
+
+Reduce function
+---------------------------
+-	[1, 2, 3, 4].reduce((prev, cur) => prev + cur); // returns 10 by performing in order (1 + 2 + 3 + 4)
+	[1, 2, 3, 4].reduceRight((prev, cur) => prev + cur); // returns 10 by performing in order (4 + 3 + 2 + 1)
+	
+-	function reducer(prev, cur) {
+		console.log(prev, cur);
+		return prev + cur;
+	}
+	[1, 2, 3, 4].reduce(reducer, 5); // 15 -- Here 5 passed as the initial value for the first loop
+
+	
+-	var names = ['Vinod', 'Suman', 'Koushik', 'Suman', 'Koushik'];
+	names.reduce((obj, cur) => {
+		if(!obj.hasOwnProperty(cur)) {
+			obj[cur] = 0;
+		}
+		obj[cur]++;
+		return obj;
+	}, {});
+	// Returns:	{Vinod: 1, Suman: 2, Koushik: 2}
+	// Returns:	{Koushik: 2, Suman: 2, Vinod: 1} if used "reduceRight" -- traverse from right side
+-->
